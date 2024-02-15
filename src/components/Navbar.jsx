@@ -1,9 +1,21 @@
-export default function Navbar() {
-  return (
-    <nav style={{ background: "#ddd", color: "#555" }}>
-      <span style={{ cursor: "pointer", float: "left" }}>Log in</span>
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { AuthContext } from "../context/AuthContext";
+import ThemeToggle from "./ThemeToggle";
 
-      <span style={{ cursor: "pointer", float: "right" }}>Dark Mode 🌚</span>
+export default function Navbar() {
+  const { dark, light, isLightTheme } = useContext(ThemeContext);
+  const { isAuth, toggleAuth } = useContext(AuthContext);
+
+  const themeStyles = isLightTheme ? light : dark;
+
+  return (
+    <nav style={{ background: themeStyles.ui, color: themeStyles.text }}>
+      <span onClick={toggleAuth} style={{ cursor: "pointer", float: "left" }}>
+        {isAuth ? "Log out" : "Log in"}
+      </span>
+
+      <ThemeToggle />
       <h1>Context App</h1>
 
       <br />
